@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.10
+    commands:
+      - echo "🔧 Installing dependencies..."
+      - pip install -r requirements.txt
+  build:
+    commands:
+      - echo "🚀 Training IsolationForest model..."
+      - python ml_model/train_isoforest.py
+      - echo "✅ Evaluating model..."
+      - python ml_model/evaluate_model.py
+      - echo "📦 Deploying dashboard..."
+      - bash dashboard/service/deploy_dashboard.sh
+artifacts:
+  files:
+    - '**/*'
+  base-directory: .
+  discard-paths: no
+  name: latest-build.zip
+
